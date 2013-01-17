@@ -1,0 +1,81 @@
+#gallery a
+	display inline-block
+	vertical-align top
+	width 120px
+	margin 10px
+	padding 1px
+	border solid 1px #ddd
+	font-size 0px
+
+	img
+		width 100%
+
+.e-ui-lightbox
+
+	sideBarHeight = 50px
+
+	position fixed
+	z-index 1
+	left 0
+	right 0
+	top 0
+	bottom 0
+
+	> *
+		margin 0
+		padding 0
+
+	.e-ui-lightbox-disabled
+		opacity .5
+
+	.e-ui-lightbox-background
+		position absolute
+		left 0
+		right 0
+		top 0
+		bottom 0
+		z-index -1
+		background-color #000
+		opacity .8
+
+	.e-ui-lightbox-content
+		position absolute
+		left 10px
+		right 10px
+		top 10px
+		bottom sideBarHeight + 34px
+		text-align center
+
+		.e-ui-lightbox-image-wrapper
+			display inline-block
+			background-color #fff
+			padding 10px
+			box-shadow 0 0 5px 5px #222
+			border-radius 4px
+
+			img
+				max-width 100%
+				max-height 100%
+
+			.e-ui-lightbox-title
+				text-align left
+				font-size 14px
+				height 14px
+				line-height 14px
+				margin-bottom: -6px
+
+	.e-ui-lightbox-sidebar
+		position absolute
+		left 10px
+		right 10px
+		bottom 0
+		height sideBarHeight
+		line-height sideBarHeight
+		text-align center
+
+		> *
+			display inline-block
+
+		.e-ui-lightbox-numbers
+			color #fff
+			text-transform uppercase

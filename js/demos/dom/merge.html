@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <title>este.dom.merge</title>
+  <link href='/assets/js/este/demos/css/default.css' rel='stylesheet'>
+  <style>
+    input, textarea {
+      display: block;
+    }
+  </style>
+  <script src='/assets/js/dev/livereload.js'></script>
+  <script src='/assets/js/google-closure/closure/goog/base.js'></script>
+  <script src='/assets/js/deps.js'></script>
+  <script>
+    goog.require('este.demos.dom.merge.templates')
+    goog.require('este.dom.merge')
+  </script>
+</head>
+<body>
+  <h1>
+    este.dom.merge</h1>
+  <div id='container'></div>
+  <p>
+    Write something, choose something, watch how view is updated and form fields
+    states are preserved.
+  </p>
+  <script>
+    var container = document.getElementById('container')
+
+    var updateForm = function(json) {
+      var html = este.demos.dom.merge.templates.form({
+        input: json.input,
+        textarea: json.textarea
+      })
+      este.dom.merge(container, html)
+    }
+
+    container.onkeyup = function() {
+      var json = este.dom.serializeForm(container.querySelector('form'))
+      updateForm(json)
+    }
+
+    updateForm({
+      input: 'name',
+      textarea: 'description'
+    })
+
+  </script>
+</body>

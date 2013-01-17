@@ -1,0 +1,86 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.storage.Local</title>
+  <style>
+  </style>
+  <link href="/assets/js/este/demos/css/default.css" rel="stylesheet">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.storage.Local')
+    goog.require('este.Model')
+    goog.require('este.Collection')
+  </script>
+</head>
+<body>
+  <h1>este.storage.Local</h1>
+  <form id="form">
+    <input name="text" autofocus placeholder="write something" type="text">
+    <button id="add">add</button>
+  <form>
+  <br>
+  <ul id="items"></ul>
+  <div>
+    <button id="reload">reload</button>
+    <button id="clear">clear</button>
+  </div>
+  <script>
+    este.dev.Monitor.create()
+
+    var storage = new este.storage.Local('storage-demo')
+    var collection = null
+
+    var onFormSubmit = function(e) {
+      e.preventDefault()
+      textField = e.target.elements['text']
+      textField.focus()
+      if (!textField.value.trim())
+        return
+
+      document.body.style.opacity = .4
+      var model = new este.Model({'text': textField.value})
+      var result = storage.save(model)
+
+      goog.result.waitOnSuccess(result, function(id) {
+        showStoredModels()
+        document.body.style.opacity = 1
+        textField.value = ''
+        textField.focus()
+      })
+    }
+
+    var reloadBrowser = function() {
+      location.reload()
+    }
+
+    var onClearClick = function() {
+      var models = collection.toArray()
+      for (var i = 0, l = models.length; i < l; i++)
+        storage.remove(models[i])
+      reloadBrowser()
+    }
+
+    var showStoredModels = function() {
+      collection = new este.Collection(null, este.Model)
+      var result = storage.query(collection)
+      goog.result.waitOnSuccess(result, function(params) {
+        var array = collection.toJson()
+        var html = []
+        for (var i = 0, l = array.length; i < l; i++)
+          html.push('<li>' + array[i].text + '</li>')
+        document.getElementById('items').innerHTML = html.join('')
+      })
+    }
+
+    document.getElementById('form').onsubmit = onFormSubmit
+    document.getElementById('reload').onclick = reloadBrowser
+    document.getElementById('clear').onclick = onClearClick
+
+    showStoredModels()
+
+  </script>
+</body>

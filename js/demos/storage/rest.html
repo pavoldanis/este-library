@@ -1,0 +1,159 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.storage.Rest</title>
+  <style>
+  </style>
+  <link href="/assets/js/este/demos/css/default.css" rel="stylesheet">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require('este.Collection')
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.Model')
+    goog.require('este.storage.Rest')
+    goog.require('goog.result')
+    goog.require('este.result')
+  </script>
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <h1>este.storage.Rest</h1>
+  <form id="form">
+    <input name="text" autofocus placeholder="write something" type="text">
+    <button id="add">add</button>
+  <form>
+  <br>
+  <ul id="items"></ul>
+  <div>
+    <button id="toggle">toggle</button>
+    <button id="reload">reload browser</button>
+    <button id="reload-items">reload items</button>
+    <button id="clear">clear</button>
+  </div>
+  <script>
+    este.dev.Monitor.create()
+    var storage = new este.storage.Rest(
+      'https://api.mongolab.com/api/:version/databases/estejsrestdemo/collections',
+      '1',
+      {'apiKey': '50e62c64e4b0874a59ee3de6'})
+    var collection = null
+    // for mongodb
+    este.Model.prototype.idAttribute = '_id.$oid'
+
+    var onFormSubmit = function(e) {
+      e.preventDefault()
+      textField = e.target.elements['text']
+      textField.focus()
+      if (!textField.value.trim())
+        return
+
+      toggleLoading(true)
+      var model = new este.Model({'text': textField.value})
+      var result = storage.add(model)
+
+      goog.result.waitOnSuccess(result, function(id) {
+        showStoredModels()
+        toggleLoading(false)
+        textField.value = ''
+        textField.focus()
+      })
+    }
+
+    var toggleLoading = function(loading) {
+      document.body.style.opacity = loading ? .4 : 1
+    }
+
+    var onClearClick = function() {
+      toggleLoading(true)
+      var models = collection.toArray()
+      var results = []
+      for (var i = 0, l = models.length; i < l; i++) {
+        result = storage.remove(models[i])
+        results.push(result)
+      }
+      combined = goog.result.combineOnSuccess.apply(goog.result, results)
+      goog.result.waitOnSuccess(combined, function(results) {
+        toggleLoading(false)
+        collection = new este.Collection(null, este.Model)
+        renderCollection(collection)
+      })
+    }
+
+    var onToggleClick = function() {
+      toggleLoading(true)
+      var models = collection.toArray()
+      var results = []
+      for (var i = 0, l = models.length; i < l; i++) {
+        model = models[i]
+        model.set('completed', !model.get('completed'))
+        result = storage.save(model)
+        results.push(result)
+      }
+      combined = goog.result.combineOnSuccess.apply(goog.result, results)
+      goog.result.waitOnSuccess(combined, function(results) {
+        toggleLoading(false)
+        renderCollection(collection)
+      })
+    }
+
+    var onReloadItems = function() {
+      toggleLoading(true)
+      var models = collection.toArray()
+      newCollection = new este.Collection(null, este.Model)
+      var results = []
+      for (var i = 0, l = models.length; i < l; i++) {
+        var newModel = new este.Model
+        var modelId = models[i].getId()
+        newModel.setId(modelId)
+        newCollection.add(newModel)
+        result = storage.load(newModel)
+        results.push(result)
+      }
+      combined = goog.result.combineOnSuccess.apply(goog.result, results)
+      goog.result.waitOnSuccess(combined, function() {
+        toggleLoading(false)
+        renderCollection(newCollection)
+      })
+    }
+
+    var onReloadBrowser = function() {
+      location.reload()
+    }
+
+    var showStoredModels = function() {
+      collection = new este.Collection(null, este.Model)
+      var result = storage.query(collection)
+      goog.result.waitOnSuccess(result, function() {
+        renderCollection(collection)
+      })
+    }
+
+    var renderCollection = function(collection) {
+      var array = collection.toJson()
+      var html = []
+      for (var i = 0, l = array.length; i < l; i++) {
+        var item = array[i]
+        html.push(
+          '<li contenteditable class="' + (item.completed ? 'completed' : '') + '">' +
+          item.text + '</li>')
+      }
+      document.getElementById('items').innerHTML = html.join('')
+    }
+
+    document.getElementById('form').onsubmit = onFormSubmit
+    document.getElementById('reload').onclick = onReloadBrowser
+    document.getElementById('toggle').onclick = onToggleClick
+    document.getElementById('reload-items').onclick = onReloadItems
+    document.getElementById('clear').onclick = onClearClick
+
+    showStoredModels()
+
+  </script>
+</body>

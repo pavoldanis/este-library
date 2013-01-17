@@ -1,0 +1,10 @@
+{namespace este.app.renderlinks.templates autoescape="contextual"}
+
+/**
+ * @param links
+ */
+{template .links}
+  {foreach $link in $links}
+    <a {if $link.selected}class="este-selected"{/if} href="{$link.href}">{$link.title}</a>{sp}
+  {/foreach}
+{/template}

@@ -1,0 +1,106 @@
+{namespace este.demos.app.todomvc.todos.templates autoescape="contextual"}
+
+/**
+ *
+ * Always render HTML via templates.
+ *
+ *  1) It's save, because autoescaping is enabled by default.
+ *  2) It's fast, because templates are precompiled.
+ *  3) It's maintable, because each template is placed in own namespace.
+ *
+ * http://estejs.tumblr.com/post/32600427488/why-script-elements-used-for-templates-are-wrong
+ */
+
+/**
+ * Element template.
+ * @param doneCount
+ * @param filter
+ * @param itemsLocalized
+ * @param remainingCount
+ * @param showMainAndFooter
+ * @param todos
+ */
+{template .element}
+  {call .header data="all" /}
+  {if $showMainAndFooter}
+    {call .main data="all" /}
+    {call .footer data="all" /}
+  {/if}
+{/template}
+
+/**
+ * Header template
+ */
+{template .header}
+  <header id="header">
+    <h1>todos</h1>
+    <form id="new-todo-form">
+      <input name="title" id="new-todo" placeholder="What needs to be done?" autofocus>
+    </form>
+  </header>
+{/template}
+
+/**
+ * Main template
+ * @param remainingCount
+ * @param todos
+ */
+{template .main}
+  <section id="main">
+    <input {if $remainingCount == 0}checked{/if} id="toggle-all" type="checkbox">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul id="todo-list">
+      {foreach $todo in $todos}
+        {call .todo}
+          {param todo: $todo /}
+        {/call}
+      {/foreach}
+    </ul>
+  </section>
+{/template}
+
+/**
+ * Todo template.
+ * Note that JSON properties needs [''] aka indexed access to work in advanced
+ * compilation mode.
+ * @param todo
+ */
+{template .todo}
+  <li
+    class="{if $todo['completed']}completed{/if} {if $todo['editing']}editing{/if}"
+    data-cid="{$todo['_cid']}">
+    <div class="view">
+      <input {if $todo['completed']}checked{/if} class="toggle" type="checkbox">
+      <label>{$todo['title']}</label>
+      <button class="destroy"></button>
+    </div>
+    <input class="edit" value="{$todo['title']}">
+  </li>
+{/template}
+
+/**
+ * Footer template
+ * @param doneCount
+ * @param itemsLocalized
+ * @param remainingCount
+ * @param filter
+ */
+{template .footer}
+  <footer id="footer">
+    <span id="todo-count"><strong>{$remainingCount}</strong> {$itemsLocalized}</span>
+    <ul id="filters">
+      <li>
+        <a class="{if $filter == ''}selected{/if}" href="#/">All</a>
+      </li>
+      <li>
+        <a class="{if $filter == 'active'}selected{/if}" href="#/active">Active</a>
+      </li>
+      <li>
+        <a class="{if $filter == 'completed'}selected{/if}" href="#/completed">Completed</a>
+      </li>
+    </ul>
+    {if $doneCount}
+      <button id="clear-completed">Clear completed ({$doneCount})</button>
+    {/if}
+  </footer>
+{/template}

@@ -1,0 +1,90 @@
+<!doctype html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <title>este.ui.FormsPersister</title>
+  <link href='/assets/js/este/demos/css/default.css' rel='stylesheet'>
+  <script src='/assets/js/dev/livereload.js'></script>
+  <script src='/assets/js/google-closure/closure/goog/base.js'></script>
+  <script src='/assets/js/deps.js'></script>
+  <script>
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.ui.FormsPersister.create')
+  </script>
+</head>
+<body>
+  <h1>
+    este.ui.FormsPersister</h1>
+  <p>
+    Maintain fields state. Click to field, write something, reload.</p>
+  <div id='container'>
+    <form id='form'>
+      <label>
+        input
+        <input name='input'>
+      </label><br>
+      <label>
+        textarea
+        <textarea name='textarea'></textarea>
+      </label><br>
+      <label>
+        select
+        <select name='select'>
+          <option>Foo</option>
+          <option>Bla</option>
+        </select>
+      </label><br>
+      <label>
+        multiselect
+        <select multiple name='multiple-select'>
+          <option>Foo</option>
+          <option>Bla</option>
+        </select>
+      </label><br>
+      <label>
+        Male
+        <input type='radio' name='radio' value='male'>
+      </label>
+      <label>
+        Female
+        <input type='radio' name='radio' value='female'>
+      </label><br>
+      <label>
+        I have a bike
+        <input type='checkbox' name='checkbox' value='Bike'>
+      </label>
+      <label>
+        I have a car
+        <input type='checkbox' name='checkbox' value='Car'>
+      </label>
+    </form>
+  </div>
+  <button id='reload'>reload page</button>
+  <button id='reset'>reset form</button>
+  <button id='restore'>restore state</button>
+  <button id='innerhtml'>innerHTML form</button>
+  <script>
+    este.dev.Monitor.create()
+    container = document.getElementById('container')
+    form = document.getElementById('form')
+
+    var formsPersister = este.ui.FormsPersister.create(container)
+
+    goog.events.listen(document.body, 'click', function(e) {
+      switch(e.target.id) {
+        case 'reload':
+          window.location.reload(true)
+          break
+        case 'reset':
+          form.reset()
+          break
+        case 'restore':
+          formsPersister.dispose()
+          formsPersister = este.ui.FormsPersister.create(container)
+          break
+        case 'innerhtml':
+          form.innerHTML = form.innerHTML
+      }
+    })
+  </script>
+</body>

@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>EsteJS • TodoMVC</title>
+  <link rel="stylesheet" href="todomvc/css/base.css">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require("este.demos.app.todomvc.start")
+  </script>
+</head>
+<body>
+  <!--
+    Are you looking for HTML script templates?
+    Read http://estejs.tumblr.com/post/32600427488/why-script-elements-used-for-templates-are-wrong
+  -->
+  <section id="todoapp"></section>
+  <footer id="info">
+    <p>Double-click to edit a todo</p>
+    <p>Created by <a href="https://github.com/Steida/este">Este.js</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+  </footer>
+  <script>este.demos.app.todomvc.start()</script>
+</body>

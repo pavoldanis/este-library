@@ -1,0 +1,85 @@
+// useful mixin from assets/este/este/styl
+inline-block-container()
+  letter-spacing -0.31em
+  word-spacing -0.43em
+
+  > *
+    display inline-block
+    letter-spacing normal
+    word-spacing normal
+    vertical-align top
+
+// resizer handles
+.e-resizer-handle-horizontal
+.e-resizer-handle-vertical
+  position absolute
+  background-color red
+  border 0
+  border-radius 6px
+  opacity .6
+
+.e-resizer-handle-horizontal
+  height 6px
+  margin-top -6px
+  cursor n-resize
+
+.e-resizer-handle-vertical
+  width 6px
+  margin-left -6px
+  cursor w-resize
+
+#layout-app
+  .este-links
+    inline-block-container()
+    display inline-block
+    background-color #eee
+    border solid 1px #ccc
+    padding .3em
+    border-radius 6px
+
+    a
+      padding .2em 1em
+      margin .3em
+      border solid 1px #ccc
+      border-radius 6px
+      color #333
+      text-decoration none
+      background-color #eee
+
+      &:hover
+        background-color #fff
+
+      &.este-selected
+        border solid 1px #aaa
+        background-color #fff
+
+  .este-content,
+  .este-sidebar
+    width 400px
+    float left
+    background-color #eee
+    border solid 1px #ccc
+    padding 1.2em
+    margin-top .3em
+    border-radius 6px
+
+  .este-sidebar
+    width 80px
+    margin-left .2em
+
+    a
+      display block
+      &.este-selected
+        text-decoration none
+        color #000
+
+  .este-content .este-foo
+      .este-box
+        display inline-block
+        padding 1.5em 2em
+        margin 1em
+        color #111
+        font-weight bold
+        border-radius 6px
+        border solid 1px #ccc
+        background-color #fff

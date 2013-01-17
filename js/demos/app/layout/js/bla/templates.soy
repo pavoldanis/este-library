@@ -1,0 +1,12 @@
+{namespace este.demos.app.layout.bla.templates autoescape="contextual"}
+
+/**
+ */
+{template .element}
+  <p>
+    Bla content. It's clickable..
+  </p>
+  <code>
+    @on @getElement(), 'div click': @onDivClick
+  </code>
+{/template}

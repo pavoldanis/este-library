@@ -1,0 +1,38 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.Collection</title>
+  <style>
+  </style>
+  <link href="/assets/js/este/demos/css/default.css" rel="stylesheet">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require('este.Collection')
+    goog.require('este.dev.Monitor.create')
+    goog.require('goog.events')
+  </script>
+</head>
+<body>
+  <h1>este.Collection</h1>
+  <textarea style="width: 140px; height: 70px" id="output"></textarea>
+  <script>
+    este.dev.Monitor.create()
+
+    var collection = new este.Collection
+    var count = 0
+
+    goog.events.listen(collection, 'update', function(e) {
+      value = JSON.stringify(collection.toJson())
+      document.getElementById('output').value = value
+    })
+
+    timer = setInterval(function() {
+      collection.add({count: ++count})
+      if (count == 3)
+        clearInterval(timer)
+    }, 1000)
+  </script>
+</body>

@@ -1,0 +1,26 @@
+<head>
+  <title>window.location.hash URI encoding problem</title>
+</head>
+<body>
+  <h1>window.location.hash URI encoding problem</h1>
+  <p>
+    This test demonstrates that window.location.hash automatically performs URI decoding when read.
+    The issue then is that setting a value and reading a value is not symetric. Also see comment
+    at goog.History.prototype.getLocationFragment_.
+  </p>
+  <p>
+    The outcome is that goog.history.setToken/getToken should be the way to work with hash-based
+    history (as it is symetric)
+  </p>
+  <script>
+      value = "#%foo%2Bbar";
+      expValue = "#%foo%2Bbar";
+
+      window.location.hash = value;
+
+      if (window.location.hash != expValue)
+        alert('Expected value does not match actual!\nExpected:' + value + '\nActual:' + window.location.hash);
+      else
+        alert('Test passed');
+  </script>
+</body>

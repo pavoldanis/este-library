@@ -1,0 +1,45 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.events.SubmitHandler</title>
+  <style>
+    textarea {
+      width: 30em;
+      height 2em;
+    }
+  </style>
+  <link href="/assets/js/este/demos/css/default.css" rel="stylesheet">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.events.SubmitHandler')
+  </script>
+</head>
+<body>
+  <h1>este.events.SubmitHandler</h1>
+  <form>
+    <fieldset>
+      <label>
+        <input name="foo" type="text">
+      </label>
+      <label>
+        <input name="bla" type="text">
+      </label>
+      <legend>Some form</legend>
+      <button>submit</button>
+    </fieldset>
+  </form>
+  <textarea id="output"></textarea>
+  <script>
+    este.dev.Monitor.create()
+
+    var handler = new este.events.SubmitHandler(document.body)
+    goog.events.listen(handler, 'submit', function(e) {
+      var json = JSON.stringify(e.json)
+      document.getElementById('output').value = json
+    })
+  </script>
+</body>

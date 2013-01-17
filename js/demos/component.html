@@ -1,0 +1,101 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.ui.Component</title>
+  <style>
+    #component {
+      border: solid 1px #ccc;
+      padding: 1em;
+    }
+    #component .box {
+      background-color: #ff8c55;
+      margin: 1em;
+    }
+    #tap {
+      background-color: #ff8c55;
+      font-size: 2em;
+      display: inline-block;
+    }
+    p {
+      padding: .3em 1em;
+    }
+  </style>
+  <link href="/assets/js/este/demos/css/default.css" rel="stylesheet">
+  <script src="/assets/js/dev/livereload.js"></script>
+  <script src="/assets/js/google-closure/closure/goog/base.js"></script>
+  <script src="/assets/js/deps.js"></script>
+  <script>
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.ui.Component')
+  </script>
+</head>
+<body>
+  <h1>este.ui.Component</h1>
+  <div id="component">
+    <p>
+      este.ui.Component provides event delegation with simple CSS selector filter for these events:
+      <ul>
+        <li>click, mousedown etc.</li>
+        <li>keys via goog.events.KeyHandler</li>
+        <li>focus and blur</li>
+        <li>tap via este.events.TapHandler</li>
+        <li>submit with form2json serialization</li>
+      </ul>
+      Open console to see logs.
+    </p>
+    <fieldset>
+      <input id="someInput" type="text" placeholder="press enter here">
+    </fieldset>
+    <div class='box'>
+      <p>
+        Box with <em>inline element, note how inner mouseovers/mouseouts are ignored</em>. It's real mouseenter/mouseleave event delegation.
+      </p>
+    </div>
+    <div id="tap">tap me</div>
+    <h3>Form</h3>
+    <form class="some-form">
+      <fieldset>
+        <label>
+          name
+          <input name="name" type="text">
+        </label>
+        <label>
+          surname
+          <input name="surname" type="text">
+        </label>
+        <button>submit</button>
+      </fieldset>
+    </form>
+  </div>
+  <script>
+    este.dev.Monitor.create()
+
+    var component = new este.ui.Component
+    component.enterDocument = function() {
+      goog.base(this, 'enterDocument')
+      this.on(document.querySelector('h1'), 'click', function() {
+        alert('h1 clicked')
+      })
+      this.on('.box', ['mouseover', 'mouseout'], function(e) {
+        console.log(e.type, e.target.tagName)
+      })
+      this.on('#someInput', goog.events.KeyCodes.ENTER, function(e) {
+        console.log(e.type, e.target.tagName, e.keyCode)
+      })
+      this.on('#someInput', ['focus', 'blur'], function(e) {
+        console.log(e.type, e.target.tagName)
+      })
+      this.on('#tap', 'tap', function(e) {
+        console.log(e.type, e.target.tagName)
+      })
+      this.on('.some-form', 'submit', function(e) {
+        e.preventDefault()
+        console.log(e.type, e.target.tagName, e.json)
+      })
+    }
+
+    component.decorate(document.getElementById('component'))
+
+  </script>
+</body>
