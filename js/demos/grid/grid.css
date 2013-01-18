@@ -1,4 +1,0 @@
-table{border-collapse:collapse;}
-table tbody tr:hover{background-color:#ff0}
-table td,table th{border:solid 1px #ccc;padding:.2em .8em;width:70px;cursor:default;}
-table td input,table th input{width:100%}

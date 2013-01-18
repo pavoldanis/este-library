@@ -1,6 +1,0 @@
-body{font-family:'PT Sans',sans-serif;font-size:16px;line-height:1.3;color:#111;padding:0 1em .3em}
-[href]{color:#04c;text-decoration:underline;cursor:pointer;}
-[href]:hover{text-decoration:none}
-.demo-progress{background-color:#c1ff00;display:inline-block;padding:.1em .7em;border-radius:4px;}
-.demo-progress.loading{font-weight:bold}
-p{max-width:560px}
