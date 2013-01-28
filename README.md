@@ -1,4 +1,4 @@
 este-library
 ============
 
-Este library written for Closure
+Este library written for Closure.
