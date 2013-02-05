@@ -105,10 +105,12 @@ suite 'este.App', ->
       test 'should dispatch load event then call load', (done) ->
         loadDispatched = false
         goog.events.listen app, 'load', (e) ->
-          assert.deepEqual e.request,
+          jsonA = JSON.stringify e.request
+          jsonB = JSON.stringify
             presenter: presenter0
             params: someParams: true
             isNavigation: false
+          assert.equal jsonA, jsonB
           loadDispatched = true
         presenter0.load = ->
           assert.isTrue loadDispatched
@@ -119,10 +121,12 @@ suite 'este.App', ->
       test 'should dispatch show event then call show', (done) ->
         showDispatched = false
         goog.events.listen app, 'show', (e) ->
-          assert.deepEqual e.request,
+          jsonA = JSON.stringify e.request
+          jsonB = JSON.stringify
             presenter: presenter0
             params: someParams: true
             isNavigation: false
+          assert.equal jsonA, jsonB
           showDispatched = true
         presenter0.show = ->
           assert.isTrue showDispatched
@@ -184,10 +188,12 @@ suite 'este.App', ->
       app.start()
       hideDispatched = false
       goog.events.listen app, 'hide', (e) ->
-        assert.deepEqual e.request,
+        jsonA = JSON.stringify e.request
+        jsonB = JSON.stringify
           presenter: presenter0
           params: someParams: true
           isNavigation: false
+        assert.equal jsonA, jsonB
         hideDispatched = true
       presenter0.hide = ->
         assert.isTrue hideDispatched
