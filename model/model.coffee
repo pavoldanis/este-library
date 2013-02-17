@@ -275,7 +275,7 @@ class este.Model extends este.Base
       key = $key.substring 1
       continue if raw && key == '_cid'
       attr = if raw then value else @get key
-      if attr.toJson
+      if attr?.toJson
         json[key] = attr.toJson()
       else
         json[key] = attr

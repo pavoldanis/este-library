@@ -139,6 +139,17 @@ suite 'este.Model', ->
         assert.deepEqual model.toJson(true, true),
           a: 'b'
 
+    test 'should be possible to set null or undefined value', ->
+      person.set 'title', null
+      person.set 'defaultFoo', undefined
+      json = person.toJson true
+      assert.deepEqual json,
+        'title': null
+        'firstName': 'Joe'
+        'lastName': 'Satriani'
+        'age': '55'
+        'defaultFoo': undefined
+
   suite 'has', ->
     test 'should work', ->
       assert.isTrue person.has 'age'
