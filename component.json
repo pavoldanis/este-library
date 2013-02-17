@@ -2,6 +2,6 @@
   "name": "este-library",
   "version": "0.0.1",
   "dependencies": {
-    "closure-library": "git://github.com/jarib/google-closure-library.git"
+    "closure-library": "git@github.com:Steida/google-closure-library.git"
   }
 }
