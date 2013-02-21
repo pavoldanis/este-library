@@ -276,7 +276,7 @@ class este.Model extends este.Base
       continue if raw && key == '_cid'
       attr = if raw then value else @get key
       if attr?.toJson
-        json[key] = attr.toJson()
+        json[key] = attr.toJson raw
       else
         json[key] = attr
     if !raw

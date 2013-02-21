@@ -95,24 +95,25 @@ suite 'este.Model', ->
       assert.equal person.get('lastName'), 'Satriani'
 
   suite 'toJson', ->
-    suite 'without json', ->
-      test 'true should not return meta name nor _cid', ->
-        person = new Person
+    suite 'true', ->
+      test 'should return undefined name and _cid for model', ->
         json = person.toJson true
-        assert.isUndefined json._cid
-        assert.isUndefined json.name
-
-      test 'false should return _cid and meta name', ->
-        person = new Person null, -> 1
-        json = person.toJson()
         assert.deepEqual json,
-          '_cid': 1
           'title': ''
-          'name': 'undefined undefined'
+          'firstName': 'Joe'
+          'lastName': 'Satriani'
+          'age': '55'
           'defaultFoo': 1
 
-    suite 'with json', ->
-      test 'false should return _cid and meta name', ->
+      test 'should return undefined name and _cid for empty model', ->
+        person = new Person
+        json = person.toJson true
+        assert.deepEqual json,
+          'title': ''
+          'defaultFoo': 1
+
+    suite 'false', ->
+      test 'should return name and _cid for model', ->
         json = person.toJson()
         assert.deepEqual json,
           '_cid': 1
@@ -123,21 +124,37 @@ suite 'este.Model', ->
           'age': 55
           'defaultFoo': 1
 
-      test 'true should not return _cid and meta name', ->
-        json = person.toJson true
+      test 'should return name and _cid for empty model', ->
+        person = new Person null, -> 1
+        json = person.toJson()
         assert.deepEqual json,
+          '_cid': 1
           'title': ''
-          'firstName': 'Joe'
-          'lastName': 'Satriani'
-          'age': '55'
+          'name': 'undefined undefined'
           'defaultFoo': 1
 
-    suite 'defined on model', ->
-      test 'should be called', ->
-        model = new este.Model
-        model.set 'a', toJson: -> 'b'
-        assert.deepEqual model.toJson(true, true),
-          a: 'b'
+    suite 'on model with attribute with toJson too', ->
+      test 'should serialize attribute too', ->
+        cid = 0
+        model = new este.Model null, -> ++cid
+        innerModel = new este.Model null, -> 1
+        innerModel.set 'b', 'c'
+        model.set 'a', innerModel
+        assert.deepEqual model.toJson(),
+          _cid: 1
+          a:
+            _cid: 1
+            b: 'c'
+
+      test 'should raw serialize attribute too', ->
+        cid = 0
+        model = new este.Model null, -> ++cid
+        innerModel = new este.Model null, -> 1
+        innerModel.set 'b', 'c'
+        model.set 'a', innerModel
+        assert.deepEqual model.toJson(true),
+          a:
+            b: 'c'
 
     test 'should be possible to set null or undefined value', ->
       person.set 'title', null
