@@ -2,6 +2,8 @@
   @fileoverview Abstract base class for validators. To allow optionable values,
   each validator, except Required, has to return true if value does not exists.
 
+  @see ../demos/validators.html
+
   Example:
   <pre>
 

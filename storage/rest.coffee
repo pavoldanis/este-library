@@ -1,5 +1,6 @@
 ###*
   @fileoverview Rest JSON storage.
+  @see ../demos/storage/rest.html
 ###
 goog.provide 'este.storage.Rest'
 

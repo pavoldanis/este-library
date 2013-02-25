@@ -1,5 +1,8 @@
 ###*
   @fileoverview este.App.
+  @see ../demos/app/layout/index.html
+  @see ../demos/app/simple/index.html
+  @see ../demos/app/todomvc/index.html
 ###
 goog.provide 'este.App'
 goog.provide 'este.App.EventType'
@@ -10,6 +13,8 @@ goog.require 'este.app.Request'
 goog.require 'este.app.request.Queue'
 goog.require 'este.app.Route'
 goog.require 'este.Base'
+goog.require 'este.result'
+goog.require 'este.router.Route'
 
 class este.App extends este.Base
 

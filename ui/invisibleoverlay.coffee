@@ -1,5 +1,6 @@
 ###*
   @fileoverview este.ui.InvisibleOverlay.
+  @see ../demos/invisibleoverlay.html
 ###
 goog.provide 'este.ui.InvisibleOverlay'
 goog.provide 'este.ui.InvisibleOverlay.create'

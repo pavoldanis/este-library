@@ -1,6 +1,7 @@
 ###*
   @fileoverview este.Router.
-  @see ../demos/router.html
+  @see ../demos/routerhash.html
+  @see ../demos/routerhtml5.html
 
   Navigation element is any element with 'href' attribute. Not only anchor, but
   li or tr too. Of course only <a href='..'s are crawable with search engines.

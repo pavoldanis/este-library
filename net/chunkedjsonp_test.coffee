@@ -6,11 +6,11 @@ suite 'este.net.ChunkedJsonp', ->
 
   setup ->
     randomStringFactory = -> 'random'
-  
+
   arrange = (jsonpFactory, payload, replyCallback) ->
     chunkedJsonp = new ChunkedJsonp jsonpFactory, randomStringFactory
     chunkedJsonp.send payload, replyCallback
-    
+
   suite 'send small payload', ->
     test 'should send one request on jsonpFactory', (done) ->
       jsonpFactory = ->

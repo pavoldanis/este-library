@@ -1,6 +1,6 @@
 ###*
 	@fileoverview Lightbox.
-	@see ../demos/lightbox.html
+	@see ../../demos/lightbox.html
 ###
 goog.provide 'este.ui.Lightbox'
 

@@ -1,5 +1,6 @@
 ###*
   @fileoverview Bubbled submit event.
+  @see ../demos/submithandler.html
 ###
 goog.provide 'este.events.SubmitHandler'
 goog.provide 'este.events.SubmitHandler.EventType'

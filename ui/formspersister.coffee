@@ -2,9 +2,6 @@
   @fileoverview Forms persister. Persist form fields state into localStorage
   or session.
 
-  note
-    not tested in IE, but it should work in IE>8 and be easily fixable for rest
-
   TODO:
     add expiration
     improve field dom path (consider: url, form name, etc.)
