@@ -23,10 +23,14 @@ suite 'este.demos.app.todomvc.todo.Model', ->
       model.set 'title', '  foo  '
       assert.equal model.get('title'), 'foo'
 
-    test 'should be required', ->
+  suite 'validate', ->
+    test 'should return Required validator', ->
       errors = model.validate()
-      assert.deepEqual errors,
-        title: required: true
+      assert.isArray errors
+      assert.lengthOf errors, 1
+      assert.equal errors[0].model, model
+      assert.equal errors[0].key, 'title'
+      assert.equal errors[0].value, ''
 
   suite 'toggleCompleted', ->
     test 'should toggle completed', ->

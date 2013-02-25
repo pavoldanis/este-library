@@ -1,0 +1,74 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>este.validators.*</title>
+  <link href="css/default.css" rel="stylesheet">
+  <style>
+    label, input {display: block;}
+  </style>
+  <script src="../../closure-library/closure/goog/base.js"></script>
+  <script src="../../deps.js"></script>
+  <script>
+    goog.require('este.dev.Monitor.create')
+    goog.require('este.Model')
+  </script>
+</head>
+<body>
+  <h1>este.validators.*</h1>
+  <form id="form">
+    <label>Name*
+      <input autofocus name="name">
+    </label>
+    <label>Email
+      <input name="email">
+    </label>
+    <label>Age
+      <input name="age">
+    </label>
+  </form>
+  <p id="output"></p>
+  <script>
+    este.dev.Monitor.create()
+
+    var model = new este.Model
+    model.schema = {
+      name: {
+        validators: [
+          este.validators.required()
+        ]
+      },
+      email: {
+        validators: [
+          este.validators.email()
+        ]
+      },
+      age: {
+        validators: [
+          este.validators.digits(),
+          este.validators.max(120)
+        ]
+      }
+    }
+
+    var validate = function() {
+      var inputs = form.getElementsByTagName('input')
+      var json = {}
+      for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i]
+        json[input.name] = input.value
+      }
+      output.innerHTML = ''
+      var errors = model.set(json)
+      if (!errors) return
+      for (var i = 0; i < errors.length; i++) {
+        output.innerHTML += errors[i].key + ': ' + errors[i].getMsg() + '<br>'
+      }
+    }
+
+    form.oninput = function(e) {
+      validate()
+    }
+    validate()
+  </script>
+</body>

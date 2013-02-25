@@ -34,8 +34,9 @@ class este.demos.app.todomvc.todo.Model extends este.Model
   schema:
     'title':
       'set': este.model.setters.trim
-      'validators':
-        'required': este.model.validators.required
+      'validators': [
+        este.validators.required()
+      ]
 
   toggleCompleted: ->
     @set 'completed', !@get 'completed'

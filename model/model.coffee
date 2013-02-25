@@ -17,6 +17,7 @@
 
   Notes
     - to modify complex attribute: joe.get('items').add 'foo'
+    - how to define schema: see model_test.coffee
 
   @see ../demos/model.html
 ###
@@ -29,10 +30,25 @@ goog.require 'este.Base'
 goog.require 'este.json'
 goog.require 'este.model.getters'
 goog.require 'este.model.setters'
-goog.require 'este.model.validators'
 goog.require 'goog.events.Event'
 goog.require 'goog.object'
 goog.require 'goog.ui.IdGenerator'
+
+goog.require 'este.validators.Base'
+goog.require 'este.validators.digits'
+goog.require 'este.validators.email'
+goog.require 'este.validators.exclusion'
+goog.require 'este.validators.format'
+goog.require 'este.validators.inclusion'
+goog.require 'este.validators.max'
+goog.require 'este.validators.maxLength'
+goog.require 'este.validators.min'
+goog.require 'este.validators.minLength'
+goog.require 'este.validators.number'
+goog.require 'este.validators.range'
+goog.require 'este.validators.rangeLength'
+goog.require 'este.validators.required'
+goog.require 'este.validators.url'
 
 class este.Model extends este.Base
 
@@ -158,7 +174,7 @@ class este.Model extends este.Base
     Returns errors.
     @param {Object|string} json Object of key value pairs or string key.
     @param {*=} value value or nothing.
-    @return {Object} errors object, ex. name: required: true if error
+    @return {Array.<este.validators.Base>}
   ###
   set: (json, value) ->
     return null if !json
@@ -173,7 +189,7 @@ class este.Model extends este.Base
   ###*
     @param {Object} json
     @param {boolean=} silent
-    @return {Object} errors object, ex. name: required: true if error
+    @return {Array.<este.validators.Base>}
     @protected
   ###
   setInternal: (json, silent) ->
@@ -287,7 +303,7 @@ class este.Model extends este.Base
     json
 
   ###*
-    @return {Object} errors object, ex. name: required: true if error
+    @return {Array.<este.validators.Base>}
   ###
   validate: ->
     keys = (key for key, value of @schema when value?['validators'])
@@ -320,20 +336,22 @@ class este.Model extends este.Base
 
   ###*
     @param {Object} json key is attr, value is its value
-    @return {Object}
+    @return {Array.<este.validators.Base>}
     @protected
   ###
   getErrors: (json) ->
-    errors = null
+    errors = []
     for key, value of json
       validators = @schema[key]?['validators']
       continue if !validators
-      for name, validator of validators
-        continue if validator value
-        errors ?= {}
-        errors[key] ?= {}
-        errors[key][name] = true
-    errors
+      for validatorFactory in validators
+        validator = validatorFactory()
+        validator.model = @
+        validator.key = key
+        validator.value = value
+        errors.push validator if not validator.validate value
+    return errors if errors.length
+    null
 
   ###*
     @param {Object} changed

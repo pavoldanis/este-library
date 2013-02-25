@@ -21,9 +21,11 @@ class este.demos.app.simple.product.Model extends este.Model
   schema:
     'name':
       'set': este.model.setters.trim
-      'validators':
-        'required': este.model.validators.required
+      'validators': [
+        este.validators.required()
+      ]
     'description':
       'set': este.model.setters.trim
-      'validators':
-        'required': este.model.validators.required
+      'validators': [
+        este.validators.required()
+      ]

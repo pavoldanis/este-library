@@ -1,5 +1,18 @@
-trimSetter = (value) -> goog.string.trim value || ''
-requiredValidator = (value) -> value && goog.string.trim(value).length
+trimSetter = (value) ->
+  goog.string.trim value || ''
+
+RequiredValidator = ->
+RequiredValidator::validate = ->
+  switch goog.typeOf @value
+    when 'string'
+      goog.string.trim(@value + '').length > 0
+    when 'array'
+      @value.length > 0
+    else
+      @value?
+
+requiredValidator = (value) ->
+  new RequiredValidator
 
 class Person extends este.Model
 
@@ -13,11 +26,13 @@ class Person extends este.Model
   schema:
     'firstName':
       'set': trimSetter
-      'validators':
-        'required': requiredValidator
+      'validators': [
+        requiredValidator
+      ]
     'lastName':
-      'validators':
-        'required': requiredValidator
+      'validators': [
+        requiredValidator
+      ]
     'name':
       'meta': (self) -> self.get('firstName') + ' ' + self.get('lastName')
     'age':
@@ -284,21 +299,36 @@ suite 'este.Model', ->
         errors = person.set()
         assert.isNull errors
 
-        errors = person.set 'firstName', null
-        assert.deepEqual errors,
-          firstName: required: true
+        errors = person.set 'firstName', ''
+        assert.isArray errors
+        assert.lengthOf errors, 1
+        assert.instanceOf errors[0], RequiredValidator
+        assert.equal errors[0].model, person
+        assert.equal errors[0].key, 'firstName'
+        assert.equal errors[0].value, ''
         assert.equal person.get('firstName'), 'Joe'
 
         errors = person.set 'firstName', 'Pepa'
         assert.deepEqual errors, null
 
-        errors = person.set 'firstName': 'Pepa', 'lastName': 'Zdepa'
+        errors = person.set
+          'firstName': 'Pepa'
+          'lastName': 'Zdepa'
         assert.deepEqual errors, null
 
-        errors = person.set 'firstName': null, 'lastName': null
-        assert.deepEqual errors,
-          firstName: required: true
-          lastName: required: true
+        errors = person.set
+          'firstName': ''
+          'lastName': ' '
+        assert.isArray errors
+        assert.lengthOf errors, 2
+        assert.instanceOf errors[0], RequiredValidator
+        assert.instanceOf errors[1], RequiredValidator
+        assert.equal errors[0].model, person
+        assert.equal errors[0].key, 'firstName'
+        assert.equal errors[0].value, ''
+        assert.equal errors[1].model, person
+        assert.equal errors[1].key, 'lastName'
+        assert.equal errors[1].value, ' '
 
     suite 'validate', ->
       test 'should return correct errors', ->
@@ -307,17 +337,25 @@ suite 'este.Model', ->
 
         person = new Person
         errors = person.validate()
-        assert.deepEqual errors,
-          firstName:
-            required: true
-          lastName:
-            required: true
+        assert.isArray errors
+        assert.lengthOf errors, 2
+        assert.instanceOf errors[0], RequiredValidator
+        assert.instanceOf errors[1], RequiredValidator
+        assert.equal errors[0].model, person
+        assert.equal errors[0].key, 'firstName'
+        assert.equal errors[0].value, undefined
+        assert.equal errors[1].model, person
+        assert.equal errors[1].key, 'lastName'
+        assert.equal errors[1].value, undefined
 
         person.set 'firstName', 'Pepa'
 
         errors = person.validate()
-        assert.deepEqual errors,
-          lastName: required: true
+        assert.lengthOf errors, 1
+        assert.instanceOf errors[0], RequiredValidator
+        assert.equal errors[0].model, person
+        assert.equal errors[0].key, 'lastName'
+        assert.equal errors[0].value, undefined
 
   suite 'idAttribute', ->
     test 'should allow to define alternate id', ->
