@@ -37,7 +37,7 @@ class este.validators.Inclusion extends este.validators.Base
     ###*
       @desc Inclusion validator message.
     ###
-    Inclusion.MSG_VALIDATOR_INCLUSION = goog.getMsg 'Please enter one of these values: {$inclusion}.'
+    Inclusion.MSG_VALIDATOR_INCLUSION = goog.getMsg 'Please enter one of these values: {$inclusion}.',
       'inclusion': @inclusion.join ', '
 
 ###*

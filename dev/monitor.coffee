@@ -52,13 +52,13 @@ class este.dev.Monitor extends este.ui.Component
   ###
   decorateInternal: (element) ->
     super element
-    @monitor = @dom_.createDom 'div'
+    @monitor = @dom_.createDom 'div',
       # absolute instead of fixed, because obsolete mobile devices
       'style': 'white-space: nowrap; font-size: 10px; position: absolute; z-index: 9999999999999; opacity: .8; max-width: 100%; right: 10px; bottom: 0; background-color: #eee; color: #000; padding: .7em;'
-    @left = @monitor.appendChild @dom_.createDom 'div'
+    @left = @monitor.appendChild @dom_.createDom 'div',
       'style': 'word-break: break-word; display: inline-block'
       'id': 'devlog'
-    @right = @monitor.appendChild @dom_.createDom 'div'
+    @right = @monitor.appendChild @dom_.createDom 'div',
       'style': 'display: inline-block'
     element.appendChild @monitor
     @timer = setInterval =>

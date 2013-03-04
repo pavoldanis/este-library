@@ -37,7 +37,7 @@ class este.validators.Exclusion extends este.validators.Base
     ###*
       @desc Exclusion validator message.
     ###
-    Exclusion.MSG_VALIDATOR_EXCLUSION = goog.getMsg '\'{$value}\' is not allowed.'
+    Exclusion.MSG_VALIDATOR_EXCLUSION = goog.getMsg '\'{$value}\' is not allowed.',
       'value': @value
 
 ###*
