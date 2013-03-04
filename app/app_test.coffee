@@ -81,8 +81,8 @@ suite 'este.App', ->
         presenter0.load = ->
           done()
           este.result.ok()
-        presenter1.load = -> throw 'error'
-        presenter2.load = -> throw 'error'
+        presenter1.load = -> throw Error 'error'
+        presenter2.load = -> throw Error 'error'
         app.start()
 
     suite 'with default urlEnabled', ->
@@ -96,8 +96,8 @@ suite 'este.App', ->
         presenter0.load = ->
           done()
           este.result.ok()
-        presenter1.load = -> throw 'error'
-        presenter2.load = -> throw 'error'
+        presenter1.load = -> throw Error 'error'
+        presenter2.load = -> throw Error 'error'
         app.start()
 
   suite 'router', ->
@@ -164,7 +164,7 @@ suite 'este.App', ->
 
     suite 'presenter1, then presenter2', ->
       test 'should call only presenter2.show', (done) ->
-        presenter1.show = -> throw 'error'
+        presenter1.show = -> throw Error 'error'
         presenter2.show = -> done()
         router.routes[1].callback()
         setTimeout ->
@@ -174,7 +174,7 @@ suite 'este.App', ->
     suite 'presenter1, then presenter2, then presenter1', ->
       test 'should call only presenter1.show', (done) ->
         presenter1.show = -> done()
-        presenter2.show = -> throw 'error'
+        presenter2.show = -> throw Error 'error'
         router.routes[1].callback()
         setTimeout ->
           router.routes[2].callback()

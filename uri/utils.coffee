@@ -11,7 +11,7 @@ goog.require 'goog.uri.utils'
   @param {string} uri
 ###
 este.uri.utils.getPathAndQuery = (uri) ->
-  pieces = goog.uri.utils.split(uri);
-  return goog.uri.utils.buildFromEncodedParts(null, null, null, null,
+  pieces = goog.uri.utils.split uri
+  return goog.uri.utils.buildFromEncodedParts null, null, null, null,
       pieces[goog.uri.utils.ComponentIndex.PATH],
-      pieces[goog.uri.utils.ComponentIndex.QUERY_DATA]);
+      pieces[goog.uri.utils.ComponentIndex.QUERY_DATA]

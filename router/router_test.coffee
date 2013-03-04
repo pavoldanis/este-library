@@ -96,7 +96,7 @@ suite 'este.Router', ->
         count = 0
         router.add '/foo', ->
           count++
-          throw 'Error'
+          throw Error 'Error'
         router.add '/foo', ->
           count++
         router.start()
