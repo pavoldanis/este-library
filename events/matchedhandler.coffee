@@ -72,7 +72,7 @@ class este.events.MatchedHandler extends goog.events.EventTarget
   getChildIndex: null
 
   ###*
-    @type {?number}
+    @type {?number|goog.events.ListenableKey}
     @private
   ###
   listenKey_: null

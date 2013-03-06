@@ -76,7 +76,10 @@ class este.ui.FormsPersister extends este.ui.Component
   ###
   retrieve: (data) ->
     for formPath, fields of data
-      form = este.dom.getElementByDomPathIndex formPath.split ','
+      stringPath = formPath.split ','
+      numberPath = goog.array.map stringPath, (item) ->
+        Number item
+      form = este.dom.getElementByDomPathIndex numberPath
       continue if !form || !form.elements
 
       fieldsMap = {}

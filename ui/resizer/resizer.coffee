@@ -141,7 +141,7 @@ class este.ui.Resizer extends este.ui.Component
     @handles.dispose()
 
   ###*
-    @param {goog.events.BrowserEvent} e
+    @param {Object} e
     @protected
   ###
   onDragStart: (e) ->
