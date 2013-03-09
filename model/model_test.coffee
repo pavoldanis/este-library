@@ -205,12 +205,6 @@ suite 'este.Model', ->
       assert.isTrue person.remove 'age'
       assert.isFalse person.has 'age'
 
-    test 'should call setParentEventTarget null on removed EventTargets', ->
-      target = new goog.events.EventTarget
-      person.set 'foo', target
-      person.remove 'foo'
-      assert.isNull target.getParentEventTarget()
-
   suite 'schema', ->
     suite 'set', ->
       test 'should work as formater before set', ->
@@ -442,3 +436,33 @@ suite 'este.Model', ->
       assert.equal model.getId(), '123'
       assert.deepEqual model.toJson(true),
         '_id': '$oid': 123
+
+  suite 'Model.equal', ->
+    test 'should work', ->
+      assert.isTrue este.Model.equal null, null
+      assert.isTrue este.Model.equal undefined, undefined
+
+      assert.isTrue este.Model.equal 1, 1
+      assert.isFalse este.Model.equal 1, 2
+
+      model1 = new este.Model a: 1, -> 1
+      model2 = new este.Model a: 1, -> 1
+      assert.isTrue este.Model.equal model1, model2
+
+      # plain object should be checked via este.json.equal
+      model1 = a: '1'
+      model2 = a: '1'
+      assert.isTrue este.Model.equal model1, model2
+
+      model1 = a: '1'
+      model2 = a: '2'
+      assert.isFalse este.Model.equal model1, model2
+
+      # plain array should be checked via este.json.equal
+      model1 = [1]
+      model2 = [1]
+      assert.isTrue este.Model.equal model1, model2
+
+      model1 = [1]
+      model2 = [2]
+      assert.isFalse este.Model.equal model1, model2

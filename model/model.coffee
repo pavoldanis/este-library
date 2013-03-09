@@ -85,6 +85,19 @@ class este.Model extends este.Base
   @eventTypes: (type for name, type of Model.EventType)
 
   ###*
+    @param {?} a
+    @param {?} b
+    @suppress {missingProperties} Because runtime detection.
+  ###
+  @equal: (a, b) ->
+    # null, undefined, falsy
+    return a == b if !a || !b
+    # este.Model or este.Collection
+    a = este.json.stringify a.toJson() if a?.toJson
+    b = este.json.stringify b.toJson() if b?.toJson
+    este.json.equal a, b
+
+  ###*
     http://www.restapitutorial.com/lessons/restfulresourcenaming.html
     Url has to start with '/'. Function type is usefull for inheritance.
     @type {string|function(): string}
@@ -329,11 +342,10 @@ class este.Model extends este.Base
     for key, value of json
       set = @schema[key]?.set
       value = set value if set
-      continue if este.json.equal value, @get key
+      continue if Model.equal value, @get key
       changes ?= {}
       changes[key] = value
     changes
-
   ###*
     @param {Object} json key is attr, value is its value
     @return {Array.<este.validators.Base>}

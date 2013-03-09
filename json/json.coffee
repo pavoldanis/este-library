@@ -32,14 +32,11 @@ goog.scope ->
       goog.json.parse str
 
   ###*
-    @param {?} a
-    @param {?} b
+    @param {*} a
+    @param {*} b
     @return {boolean}
-    @suppress {missingProperties} Because toJson is runtime detected.
   ###
   _.equal = (a, b) ->
-    a = a.toJson() if a?.toJson
-    b = b.toJson() if b?.toJson
     _.stringify(a) == _.stringify(b)
 
   return
