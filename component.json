@@ -1,6 +1,6 @@
 {
   "name": "este-library",
-  "version": "0.0.1",
+  "version": "1.0.3",
   "dependencies": {
     "closure-library": "git://github.com/Steida/google-closure-library.git"
   }
