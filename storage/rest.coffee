@@ -22,7 +22,7 @@ class este.storage.Rest extends este.storage.Base
   ###
   constructor: (namespace, version, queryParams) ->
     super namespace, version
-    @namespace = namespace.replace(':version', @version)
+    @namespace = namespace.replace ':version', @version
     @queryParams = queryParams ? null
     `this.xhrOptions = /** @type {goog.labs.net.xhr.Options} */ (this.xhrOptions)`
 
@@ -46,7 +46,7 @@ class este.storage.Rest extends este.storage.Base
   ###
   getRestUrl: (url, id) ->
     restUrl = goog.uri.utils.appendPath @namespace, url
-    if id?
+    if id
       restUrl = goog.uri.utils.appendPath restUrl, id
     if @queryParams
       restUrl = goog.uri.utils.appendParamsFromMap restUrl, @queryParams
