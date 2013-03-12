@@ -1,0 +1,26 @@
+{
+  "name": "este-library",
+  "version": "1.0.0",
+  "description": "Library for github.com/Steida/este.git",
+  "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
+  "keywords": [
+    "Este",
+    "CoffeeScript",
+    "Google",
+    "Closure",
+    "Compiler",
+    "MVC"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Steida/este-library.git"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-release": "*"
+  },
+  "engines": {
+    "node": "v0.8.x"
+  },
+  "license": "MIT"
+}
