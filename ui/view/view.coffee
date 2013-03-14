@@ -19,7 +19,7 @@ class este.ui.View extends este.ui.Component
 
   ###*
     @param {Function} fn
-    @return
+    @return {Function}
   ###
   bindModel: (fn) ->
     (e) ->
