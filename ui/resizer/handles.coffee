@@ -18,6 +18,7 @@ class este.ui.resizer.Handles extends este.ui.Component
     @extends {este.ui.Component}
   ###
   constructor: (@draggerFactory, @invisibleOverlayFactory) ->
+    super()
 
   ###*
     @return {este.ui.resizer.Handles}

@@ -13,6 +13,7 @@ class este.ui.lightbox.AnchorClickHandler extends este.ui.Component
     @extends {este.ui.Component}
   ###
   constructor: ->
+    super()
 
   ###*
     @override
