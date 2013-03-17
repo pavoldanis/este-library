@@ -512,4 +512,11 @@ goog.scope ->
   _.isRealMouseClick = (e) ->
     e.isMouseActionButton() && !e.platformModifierKey
 
+  ###*
+    @param {Element} form
+    @param {boolean} lock
+  ###
+  _.lockForm = (form, lock) ->
+    field.disabled = lock for field in form.elements
+
   return
