@@ -29,6 +29,7 @@ class este.validators.Max extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     isStringOrNumber = typeof @value in ['string', 'number']
     goog.asserts.assert isStringOrNumber, 'Expected string or number.'
     value = @value

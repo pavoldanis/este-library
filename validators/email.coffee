@@ -21,8 +21,8 @@ class este.validators.Email extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     goog.asserts.assertString @value
-    return true unless @value
     goog.format.EmailAddress.isValidAddress @value
 
   ###*

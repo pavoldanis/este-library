@@ -20,8 +20,8 @@ class este.validators.Digits extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     goog.asserts.assertString @value
-    return true unless @value
     /^\d+$/.test @value
 
   ###*

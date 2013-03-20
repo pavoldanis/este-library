@@ -76,3 +76,9 @@ class este.validators.Base
     @return {string}
   ###
   getMsg: goog.abstractMethod
+
+  ###*
+    @return {boolean} True, if value is not defined or empty.
+  ###
+  isValueEmpty: ->
+    @value is undefined or @value is null or @value is ''

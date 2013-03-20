@@ -10,6 +10,14 @@ suite 'este.validators.digits', ->
       digits.value = '123'
       assert.isTrue digits.validate()
 
+    test 'undefined should be valid', ->
+      digits.value = undefined
+      assert.isTrue digits.validate()
+
+    test 'null should be valid', ->
+      digits.value = null
+      assert.isTrue digits.validate()
+
     test '"" should be valid', ->
       digits.value = ''
       assert.isTrue digits.validate()

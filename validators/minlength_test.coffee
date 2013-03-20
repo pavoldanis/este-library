@@ -10,9 +10,10 @@ suite 'este.validators.minLength', ->
       minLength.value = 'ab'
       assert.isFalse minLength.validate()
 
-    test 'should return false for ""', ->
+    test 'should return true for ""
+      (only required validator requires non empty input)', ->
       minLength.value = ''
-      assert.isFalse minLength.validate()
+      assert.isTrue minLength.validate()
 
     test 'should return true for abc', ->
       minLength.value = 'abc'

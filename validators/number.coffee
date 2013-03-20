@@ -21,8 +21,8 @@ class este.validators.Number extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     goog.asserts.assertString @value
-    return true if @value == ''
     value = goog.string.toNumber @value
     typeof value == 'number' && goog.math.isFiniteNumber value
 

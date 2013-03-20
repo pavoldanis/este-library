@@ -36,8 +36,8 @@ class este.validators.RangeLength extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     goog.asserts.assertString @value
-    return true unless @value
     @min <= @value.length <= @max
 
   ###*

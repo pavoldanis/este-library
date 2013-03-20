@@ -27,6 +27,7 @@ class este.validators.MaxLength extends este.validators.Base
     @override
   ###
   validate: ->
+    return true if @isValueEmpty()
     goog.asserts.assertString @value
     @value.length <= @maxLength
 
